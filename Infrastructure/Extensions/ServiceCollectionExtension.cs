@@ -7,11 +7,11 @@ namespace Infrastructure.Extensions;
 
 public static class ServiceCollectionExtension
 {
-    public static void AddInfrastructure(this IServiceCollection services, IConfiguration configuration)
+    public static IServiceCollection AddInfrastructure(this IServiceCollection services, IConfiguration configuration)
     {
-        var connectionString = configuration.GetConnectionString("DefaultConnection");
-
         services.AddDbContext<UpgamingDbContext>(options =>
-            options.UseMySql(connectionString, ServerVersion.AutoDetect(connectionString)));
+            options.UseSqlServer(configuration.GetConnectionString("DefaultConnection")));
+
+        return services;
     }
 }
