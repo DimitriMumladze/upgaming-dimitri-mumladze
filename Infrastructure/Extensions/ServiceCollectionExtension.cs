@@ -1,4 +1,6 @@
-﻿using Infrastructure.Persistence;
+﻿using Domain.Interfaces.BaseInterface;
+using Infrastructure.Persistence;
+using Infrastructure.Repositories.BaseRepository;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
@@ -11,6 +13,9 @@ public static class ServiceCollectionExtension
     {
         services.AddDbContext<UpgamingDbContext>(options =>
             options.UseSqlServer(configuration.GetConnectionString("DefaultConnection")));
+
+        // Service Registration
+        services.AddScoped(typeof(IGenericRepository<,>), typeof(GenericRepository<,>));
 
         return services;
     }
