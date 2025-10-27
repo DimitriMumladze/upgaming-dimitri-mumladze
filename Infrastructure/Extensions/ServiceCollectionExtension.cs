@@ -1,5 +1,7 @@
-﻿using Domain.Interfaces.BaseInterface;
+﻿using Domain.Interfaces;
+using Domain.Interfaces.BaseInterface;
 using Infrastructure.Persistence;
+using Infrastructure.Repositories;
 using Infrastructure.Repositories.BaseRepository;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
@@ -15,7 +17,8 @@ public static class ServiceCollectionExtension
             options.UseSqlServer(configuration.GetConnectionString("DefaultConnection")));
 
         // Service Registration
-        services.AddScoped(typeof(IGenericRepository<,>), typeof(GenericRepository<,>));
+        services.AddScoped<IAuthorRepository, AuthorRepository>();
+        services.AddScoped<IBookRepository, BookRepository>();
 
         return services;
     }
