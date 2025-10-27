@@ -3,7 +3,7 @@ using FluentValidation;
 
 namespace Application.Validations.AuthorValidations;
 
-public class AuthorCreateValidator : AbstractValidator<AuthorUpdateDto>
+public class AuthorCreateValidator : AbstractValidator<AuthorCreateDto>
 {
     public AuthorCreateValidator()
     {
