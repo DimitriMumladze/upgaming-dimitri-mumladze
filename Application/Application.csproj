@@ -20,4 +20,11 @@
     <PackageReference Include="Microsoft.Extensions.Logging.Abstractions" Version="6.0.0" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Folder Include="Features\AuthorFeatures\Commands\" />
+    <Folder Include="Features\AuthorFeatures\Queries\" />
+    <Folder Include="Features\BookFeatures\Commands\" />
+    <Folder Include="Features\BookFeatures\Queries\" />
+  </ItemGroup>
+
 </Project>
