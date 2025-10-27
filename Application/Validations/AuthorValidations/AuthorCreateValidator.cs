@@ -1,9 +1,10 @@
 ﻿using Application.Dtos.AuthorDtos;
+using Application.Features.AuthorFeatures.Commands.CreateAuthor;
 using FluentValidation;
 
 namespace Application.Validations.AuthorValidations;
 
-public class AuthorCreateValidator : AbstractValidator<AuthorCreateDto>
+public class AuthorCreateValidator : AbstractValidator<CreateAuthorCommand>
 {
     public AuthorCreateValidator()
     {
