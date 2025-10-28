@@ -6,6 +6,6 @@ public class AuthorReadDto
 {
     public int Id { get; set; }
     public string Name { get; set; } = default!;
-    public ICollection<BookReadDto> Books { get; set; } = new List<BookReadDto>();
+    public ICollection<BookReadDtoForAuthor> Books { get; set; } = new List<BookReadDtoForAuthor>();
 }
 

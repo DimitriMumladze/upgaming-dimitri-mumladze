@@ -51,9 +51,9 @@ public class AuthorsController : ControllerBase
     // GET: api/authors/{id}/books
     // Returns list of books by specific author
     [HttpGet("{id}/books")]
-    [ProducesResponseType(typeof(IEnumerable<BookReadDto>), StatusCodes.Status200OK)]
+    [ProducesResponseType(typeof(IEnumerable<BookReadDtoForAuthor>), StatusCodes.Status200OK)]
     [ProducesResponseType(StatusCodes.Status404NotFound)]
-    public async Task<ActionResult<IEnumerable<BookReadDto>>> GetBooksByAuthor(int id)
+    public async Task<ActionResult<IEnumerable<BookReadDtoForAuthor>>> GetBooksByAuthor(int id)
     {
         var books = await _mediator.Send(new GetBooksByAuthorQuery(id));
 

@@ -3,7 +3,7 @@ using MediatR;
 
 namespace Application.Features.AuthorFeatures.Queries.GetBookByAuthor;
 
-public class GetBooksByAuthorQuery : IRequest<IEnumerable<BookReadDto>?>
+public class GetBooksByAuthorQuery : IRequest<IEnumerable<BookReadDtoForAuthor>?>
 {
     public int AuthorId { get; set; }
 

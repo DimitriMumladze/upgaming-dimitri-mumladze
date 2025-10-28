@@ -6,7 +6,7 @@ using Microsoft.Extensions.Logging;
 
 namespace Application.Features.AuthorFeatures.Queries.GetBookByAuthor;
 
-public class GetBooksByAuthorQueryHandler : IRequestHandler<GetBooksByAuthorQuery, IEnumerable<BookReadDto>?>
+public class GetBooksByAuthorQueryHandler : IRequestHandler<GetBooksByAuthorQuery, IEnumerable<BookReadDtoForAuthor>?>
 {
     private readonly IBookRepository _bookRepository;
     private readonly IAuthorRepository _authorRepository;
@@ -25,7 +25,7 @@ public class GetBooksByAuthorQueryHandler : IRequestHandler<GetBooksByAuthorQuer
         _logger = logger;
     }
 
-    public async Task<IEnumerable<BookReadDto>?> Handle(GetBooksByAuthorQuery request, CancellationToken cancellationToken)
+    public async Task<IEnumerable<BookReadDtoForAuthor>?> Handle(GetBooksByAuthorQuery request, CancellationToken cancellationToken)
     {
         _logger.LogInformation("Fetching books for author with ID: {AuthorId}", request.AuthorId);
 
@@ -39,7 +39,7 @@ public class GetBooksByAuthorQueryHandler : IRequestHandler<GetBooksByAuthorQuer
 
         var books = await _bookRepository.GetBooksByAuthorIdAsync(request.AuthorId, cancellationToken);
 
-        var result = _mapper.Map<IEnumerable<BookReadDto>>(books);
+        var result = _mapper.Map<IEnumerable<BookReadDtoForAuthor>>(books);
 
         _logger.LogInformation("Found {BookCount} books for author with ID {AuthorId}.",
             result.Count(), request.AuthorId);
