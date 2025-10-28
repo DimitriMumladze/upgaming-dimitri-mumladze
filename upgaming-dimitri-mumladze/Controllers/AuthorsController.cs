@@ -22,7 +22,10 @@ public class AuthorsController : ControllerBase
         _mediator = mediator;
     }
 
-    // GET: api/authors
+    /// <summary>
+    /// Retrieves all authors with their books.
+    /// </summary>
+    /// <returns>A list of all authors with nested book collections</returns>
     [HttpGet]
     [ProducesResponseType(typeof(IEnumerable<AuthorReadDto>), StatusCodes.Status200OK)]
     public async Task<ActionResult<IEnumerable<AuthorReadDto>>> GetAll()
@@ -31,8 +34,11 @@ public class AuthorsController : ControllerBase
         return Ok(authors);
     }
 
-    // GET: api/authors/{id}
-    // Returns author details with nested list of books
+    /// <summary>
+    /// Retrieves a specific author by ID with their books.
+    /// </summary>
+    /// <param name="id">The unique identifier of the author</param>
+    /// <returns>Author details with nested list of books</returns>
     [HttpGet("{id}")]
     [ProducesResponseType(typeof(AuthorReadDto), StatusCodes.Status200OK)]
     [ProducesResponseType(StatusCodes.Status404NotFound)]
@@ -48,8 +54,11 @@ public class AuthorsController : ControllerBase
         return Ok(author);
     }
 
-    // GET: api/authors/{id}/books
-    // Returns list of books by specific author
+    /// <summary>
+    /// Retrieves all books written by a specific author.
+    /// </summary>
+    /// <param name="id">The unique identifier of the author</param>
+    /// <returns>A list of books by the specified author</returns>
     [HttpGet("{id}/books")]
     [ProducesResponseType(typeof(IEnumerable<BookReadDtoForAuthor>), StatusCodes.Status200OK)]
     [ProducesResponseType(StatusCodes.Status404NotFound)]
@@ -65,35 +74,34 @@ public class AuthorsController : ControllerBase
         return Ok(books);
     }
 
-    // POST: api/authors
+    /// <summary>
+    /// Creates a new author.
+    /// </summary>
+    /// <param name="createDto">The author creation data</param>
+    /// <returns>The newly created author</returns>
     [HttpPost]
     [ProducesResponseType(typeof(AuthorReadDto), StatusCodes.Status201Created)]
     [ProducesResponseType(StatusCodes.Status400BadRequest)]
     public async Task<ActionResult<AuthorReadDto>> Create([FromBody] AuthorCreateDto createDto)
     {
-        if (string.IsNullOrWhiteSpace(createDto.Name))
-        {
-            return BadRequest(new { Message = "Author name is required." });
-        }
-
         var command = new CreateAuthorCommand { Name = createDto.Name };
         var author = await _mediator.Send(command);
 
         return CreatedAtAction(nameof(GetById), new { id = author.Id }, author);
     }
 
-    // PUT: api/authors/{id}
+    /// <summary>
+    /// Updates an existing author's details.
+    /// </summary>
+    /// <param name="id">The unique identifier of the author to update</param>
+    /// <param name="updateDto">The updated author data</param>
+    /// <returns>The updated author details</returns>
     [HttpPut("{id}")]
     [ProducesResponseType(typeof(AuthorReadDto), StatusCodes.Status200OK)]
     [ProducesResponseType(StatusCodes.Status404NotFound)]
     [ProducesResponseType(StatusCodes.Status400BadRequest)]
     public async Task<ActionResult<AuthorReadDto>> Update(int id, [FromBody] AuthorUpdateDto updateDto)
     {
-        if (string.IsNullOrWhiteSpace(updateDto.Name))
-        {
-            return BadRequest(new { Message = "Author name is required." });
-        }
-
         var command = new UpdateAuthorCommand
         {
             Id = id,
@@ -110,7 +118,11 @@ public class AuthorsController : ControllerBase
         return Ok(author);
     }
 
-    // DELETE: api/authors/{id}
+    /// <summary>
+    /// Deletes an author and all associated books.
+    /// </summary>
+    /// <param name="id">The unique identifier of the author to delete</param>
+    /// <returns>No content on successful deletion</returns>
     [HttpDelete("{id}")]
     [ProducesResponseType(StatusCodes.Status204NoContent)]
     [ProducesResponseType(StatusCodes.Status404NotFound)]
@@ -126,4 +138,3 @@ public class AuthorsController : ControllerBase
         return NoContent();
     }
 }
-
